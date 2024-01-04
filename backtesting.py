@@ -214,7 +214,7 @@ def main():
         st.write(f"Montant final : {montant_final_max:.2f} €")
         st.write(f"Intérêts composés : {interets:.2f} €")
         st.write(f"Pourcentage d'évolution : {meilleur_resultat['pourcentage_evolution']:.2f} %")
-        st.write(f"CAGR : {((((resultat[0][meilleure_frequence]['montant_final'] / resultat[0][meilleure_frequence]['total_investissement'])) ** (1 / years_difference)) - 1) *100:.2f} %")
+        st.write(f"CAGR : {((((resultats[0][meilleure_frequence]['montant_final'] / resultats[0][meilleure_frequence]['total_investissement'])) ** (1 / years_difference)) - 1) *100:.2f} %")
 
         # Mise en forme du titre et des axes
         fig.update_layout(title='Évolution des investissements',
