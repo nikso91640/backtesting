@@ -175,33 +175,58 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
     return resultats, meilleure_frequence, meilleur_resultat, years_difference, montant_final_max
 
 
+# Fonction principale pour exécuter le code Streamlit
 def main():
-    st.title('Analyse d\'investissement avec Streamlit')
+    st.title("Analyse d'investissement")
 
+    # Création des widgets d'entrée dans Streamlit
     ticker = st.text_input("Entrez le ticker Yahoo Finance (par exemple 'CW8.PA') : ")
 
     if st.button("Analyser"):
         if ticker:
             date_debut = st.number_input("Entrez l'année de début : ", min_value=1900, max_value=datetime.now().year)
             date_fin = st.number_input("Entrez l'année de fin : ", min_value=date_debut, max_value=datetime.now().year)
-
             montant_initial = st.number_input("Entrez le montant initial en euros : ", min_value=0.01)
             montant_recurrent = st.number_input("Entrez le montant récurrent : ", min_value=0.01)
 
+            # Calcul des rendements cumulatifs
             resultats = calculate_cumulative_returns(ticker, date_debut, date_fin, montant_initial, montant_recurrent)
 
-            # Affichage des résultats avec Streamlit
-            st.write("Résultats de l'analyse : ")
-            st.write(resultats)
+            # Affichage des résultats via Streamlit
+            for frequency, resultat in resultats[0].items():
+                st.write(f"\nFréquence {frequency} mois")
+                st.write(f"Date du 1er investissement : {resultat['date_first_invest']}")
+                st.write(f"Date du dernier investissement : {resultat['date_last_invest']}")
+                st.write(f"Nombre d'investissements (initial + récurrents) : {resultat['nombre_investissement']}")
+                st.write(f"Total investissement (initial + récurrents) : {resultat['total_investissement']}")
+                st.write(f"Montant final : {resultat['montant_final']:.2f} €")
+                st.write(f"Pourcentage d'évolution : {resultat['pourcentage_evolution']:.2f} %")
 
-            # Affichage du graphique avec Streamlit
-            plt.xlabel('Date')
-            plt.ylabel('Total investissement')
-            plt.title(f'{yf.Ticker(ticker).info["shortName"]} : variation de l\'investissement au fil du temps pour chaque fréquence')
-            plt.legend()
-            plt.grid(True)
+            meilleure_frequence = resultats[1]
+            meilleur_resultat = resultats[2]
+            years_difference = resultats[3]
+            montant_final_max = resultats[4]
+            interets = montant_final_max - resultats[0][meilleure_frequence]['total_investissement']
+
+            # Affichage des informations récapitulatives
+            st.write('\n----------------- RECAPITULATIF ---------------------')
+            st.write(f"ETF : {ticker}")
+            st.write(f"Durée d'investissement : {years_difference} ans")
+            st.write(f"Montant initial : {montant_initial} €")
+            st.write(f"Total des investissements (initial + récurrents): {resultats[0][meilleure_frequence]['total_investissement']:.2f} €")
+
+            # Affichage des résultats finaux
+            st.write('\n----------- RESULTAT --------------')
+            st.write(f"Meilleure fréquence : {meilleure_frequence}")
+            st.write(f"Montant épargné : {resultats[0][meilleure_frequence]['total_investissement']:.2f} €")
+            st.write(f"Montant final : {montant_final_max:.2f} €")
+            st.write(f"Intérêts composés : {interets:.2f} €")
+            st.write(f"Pourcentage d'évolution : {meilleur_resultat['pourcentage_evolution']:.2f} %")
+
+            # Affichage du graphique
+            plt.figure(figsize=(10, 6))
+            # Vos opérations pour créer le graphique
             st.pyplot(plt)
-
 
 if __name__ == "__main__":
     main()
