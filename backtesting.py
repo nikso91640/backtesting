@@ -223,10 +223,25 @@ def main():
             st.write(f"Intérêts composés : {interets:.2f} €")
             st.write(f"Pourcentage d'évolution : {meilleur_resultat['pourcentage_evolution']:.2f} %")
 
-            # Affichage du graphique
-            plt.figure(figsize=(10, 6))
-            # Vos opérations pour créer le graphique
-            st.pyplot(plt)
-
+            # Création du graphique avec Plotly
+            fig = px.line()
+    
+            for frequency, resultat in resultats[0].items():
+                fig.add_scatter(x=resultat['date_first_invest'], y=resultat['montant_final'], mode='lines+markers',
+                                name=f'Fréquence : {frequency} mois')
+    
+            fig.add_scatter(x=dates['Date'], y=investissements_initiaux_recurrents_cumulatifs, mode='lines+markers',
+                            name='Total des versements')
+            fig.add_scatter(x=dates['Date'], y=lumpSum['valeur_finale_investissement'], mode='lines+markers',
+                            name='Lump Sum', line=dict(color='orange'))
+    
+            # Mise en forme du titre et des axes
+            fig.update_layout(title='Évolution des investissements',
+                              xaxis_title='Date',
+                              yaxis_title='Montant (en euros)')
+    
+            # Affichage du graphique avec Streamlit
+            st.plotly_chart(fig)
+        
 if __name__ == "__main__":
     main()
