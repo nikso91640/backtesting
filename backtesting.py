@@ -173,10 +173,10 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
 
     fig.add_trace(go.Scatter(x=dates['Date'], y=investissements_initiaux_recurrents_cumulatifs,
                 mode='markers+lines', name='Total des versements',
-                marker=dict(color='black', symbol='circle', size=4))
+                marker=dict(color='black', symbol='circle', size=4)))
     fig.add_trace(go.Scatter(x=dates['Date'], y=lumpSum['valeur_finale_investissement'],
                 mode='markers+lines', name='Lump Sum',
-                marker=dict(color='orange', symbol='circle', size=4))
+                marker=dict(color='orange', symbol='circle', size=4)))
     
     return resultats, meilleure_frequence, meilleur_resultat, years_difference, montant_final_max
 
