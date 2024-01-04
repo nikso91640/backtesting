@@ -178,7 +178,7 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
                 mode='markers+lines', name='Lump Sum',
                 marker=dict(color='orange', symbol='circle', size=4)))
     
-    return resultats, meilleure_frequence, meilleur_resultat, years_difference, montant_final_max
+    return resultats, meilleure_frequence, meilleur_resultat, years_difference, montant_final_max, lumpSum
 
 
 # Fonction principale pour exécuter le code Streamlit
@@ -201,12 +201,11 @@ def main():
         years_difference = resultats[3]
         montant_final_max = resultats[4]
         interets = montant_final_max - resultats[0][meilleure_frequence]['total_investissement']
+        lumpSum = lumpSum['investissement']
 
         # Affichage des informations récapitulatives
-        st.write('\n----------------- RECAPITULATIF ---------------------')
         st.write(f"ETF : {ticker}")
         st.write(f"Durée d'investissement : {years_difference} ans")
-        st.write(f"Montant initial : {montant_initial} €")
         st.write(f"Total des investissements (initial + récurrents): {resultats[0][meilleure_frequence]['total_investissement']:.2f} €")
 
         # Affichage des résultats finaux
@@ -216,6 +215,7 @@ def main():
         st.write(f"Montant final : {montant_final_max:.2f} €")
         st.write(f"Intérêts composés : {interets:.2f} €")
         st.write(f"Pourcentage d'évolution : {meilleur_resultat['pourcentage_evolution']:.2f} %")
+        st.write(f"CAGR : {((((resultat_dictionnaire[meilleure_frequence]['montant_final'] / resultat_dictionnaire[meilleure_frequence]['total_investissement'])) ** (1 / years_difference)) - 1) *100:.2f} %")
 
         # Mise en forme du titre et des axes
         fig.update_layout(title='Évolution des investissements',
