@@ -196,16 +196,6 @@ def main():
         # Calcul des rendements cumulatifs
         resultats = calculate_cumulative_returns(ticker, date_debut, date_fin, montant_initial, montant_recurrent)
 
-        # Affichage des résultats via Streamlit
-        for frequency, resultat in resultats[0].items():
-            st.write(f"\nFréquence {frequency} mois")
-            st.write(f"Date du 1er investissement : {resultat['date_first_invest']}")
-            st.write(f"Date du dernier investissement : {resultat['date_last_invest']}")
-            st.write(f"Nombre d'investissements (initial + récurrents) : {resultat['nombre_investissement']}")
-            st.write(f"Total investissement (initial + récurrents) : {resultat['total_investissement']}")
-            st.write(f"Montant final : {resultat['montant_final']:.2f} €")
-            st.write(f"Pourcentage d'évolution : {resultat['pourcentage_evolution']:.2f} %")
-
         meilleure_frequence = resultats[1]
         meilleur_resultat = resultats[2]
         years_difference = resultats[3]
