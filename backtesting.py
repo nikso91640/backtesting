@@ -178,7 +178,7 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
                 mode='markers+lines', name='Lump Sum',
                 marker=dict(color='orange', symbol='circle', size=4)))
     
-    return resultats, meilleure_frequence, meilleur_resultat, years_difference, montant_final_max, lumpSum
+    return resultats, meilleure_frequence, meilleur_resultat, years_difference, montant_final_max
 
 
 # Fonction principale pour exécuter le code Streamlit
