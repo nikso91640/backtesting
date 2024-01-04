@@ -187,60 +187,59 @@ def main():
     montant_recurrent = st.number_input("Entrez le montant récurrent : ", min_value=1)
 
     if st.button("Analyser"):
-        if ticker:
-            # Calcul des rendements cumulatifs
-            resultats = calculate_cumulative_returns(ticker, date_debut, date_fin, montant_initial, montant_recurrent)
+        # Calcul des rendements cumulatifs
+        resultats = calculate_cumulative_returns(ticker, date_debut, date_fin, montant_initial, montant_recurrent)
 
-            # Affichage des résultats via Streamlit
-            for frequency, resultat in resultats[0].items():
-                st.write(f"\nFréquence {frequency} mois")
-                st.write(f"Date du 1er investissement : {resultat['date_first_invest']}")
-                st.write(f"Date du dernier investissement : {resultat['date_last_invest']}")
-                st.write(f"Nombre d'investissements (initial + récurrents) : {resultat['nombre_investissement']}")
-                st.write(f"Total investissement (initial + récurrents) : {resultat['total_investissement']}")
-                st.write(f"Montant final : {resultat['montant_final']:.2f} €")
-                st.write(f"Pourcentage d'évolution : {resultat['pourcentage_evolution']:.2f} %")
+        # Affichage des résultats via Streamlit
+        for frequency, resultat in resultats[0].items():
+            st.write(f"\nFréquence {frequency} mois")
+            st.write(f"Date du 1er investissement : {resultat['date_first_invest']}")
+            st.write(f"Date du dernier investissement : {resultat['date_last_invest']}")
+            st.write(f"Nombre d'investissements (initial + récurrents) : {resultat['nombre_investissement']}")
+            st.write(f"Total investissement (initial + récurrents) : {resultat['total_investissement']}")
+            st.write(f"Montant final : {resultat['montant_final']:.2f} €")
+            st.write(f"Pourcentage d'évolution : {resultat['pourcentage_evolution']:.2f} %")
 
-            meilleure_frequence = resultats[1]
-            meilleur_resultat = resultats[2]
-            years_difference = resultats[3]
-            montant_final_max = resultats[4]
-            interets = montant_final_max - resultats[0][meilleure_frequence]['total_investissement']
+        meilleure_frequence = resultats[1]
+        meilleur_resultat = resultats[2]
+        years_difference = resultats[3]
+        montant_final_max = resultats[4]
+        interets = montant_final_max - resultats[0][meilleure_frequence]['total_investissement']
 
-            # Affichage des informations récapitulatives
-            st.write('\n----------------- RECAPITULATIF ---------------------')
-            st.write(f"ETF : {ticker}")
-            st.write(f"Durée d'investissement : {years_difference} ans")
-            st.write(f"Montant initial : {montant_initial} €")
-            st.write(f"Total des investissements (initial + récurrents): {resultats[0][meilleure_frequence]['total_investissement']:.2f} €")
+        # Affichage des informations récapitulatives
+        st.write('\n----------------- RECAPITULATIF ---------------------')
+        st.write(f"ETF : {ticker}")
+        st.write(f"Durée d'investissement : {years_difference} ans")
+        st.write(f"Montant initial : {montant_initial} €")
+        st.write(f"Total des investissements (initial + récurrents): {resultats[0][meilleure_frequence]['total_investissement']:.2f} €")
 
-            # Affichage des résultats finaux
-            st.write('\n----------- RESULTAT --------------')
-            st.write(f"Meilleure fréquence : {meilleure_frequence}")
-            st.write(f"Montant épargné : {resultats[0][meilleure_frequence]['total_investissement']:.2f} €")
-            st.write(f"Montant final : {montant_final_max:.2f} €")
-            st.write(f"Intérêts composés : {interets:.2f} €")
-            st.write(f"Pourcentage d'évolution : {meilleur_resultat['pourcentage_evolution']:.2f} %")
+        # Affichage des résultats finaux
+        st.write('\n----------- RESULTAT --------------')
+        st.write(f"Meilleure fréquence : {meilleure_frequence}")
+        st.write(f"Montant épargné : {resultats[0][meilleure_frequence]['total_investissement']:.2f} €")
+        st.write(f"Montant final : {montant_final_max:.2f} €")
+        st.write(f"Intérêts composés : {interets:.2f} €")
+        st.write(f"Pourcentage d'évolution : {meilleur_resultat['pourcentage_evolution']:.2f} %")
 
-            # Création du graphique avec Plotly
-            fig = px.line()
-    
-            for frequency, resultat in resultats[0].items():
-                fig.add_scatter(x=resultat['date_first_invest'], y=resultat['montant_final'], mode='lines+markers',
-                                name=f'Fréquence : {frequency} mois')
-    
-            fig.add_scatter(x=dates['Date'], y=investissements_initiaux_recurrents_cumulatifs, mode='lines+markers',
-                            name='Total des versements')
-            fig.add_scatter(x=dates['Date'], y=lumpSum['valeur_finale_investissement'], mode='lines+markers',
-                            name='Lump Sum', line=dict(color='orange'))
-    
-            # Mise en forme du titre et des axes
-            fig.update_layout(title='Évolution des investissements',
-                              xaxis_title='Date',
-                              yaxis_title='Montant (en euros)')
-    
-            # Affichage du graphique avec Streamlit
-            st.plotly_chart(fig)
+        # Création du graphique avec Plotly
+        fig = px.line()
+
+        for frequency, resultat in resultats[0].items():
+            fig.add_scatter(x=resultat['date_first_invest'], y=resultat['montant_final'], mode='lines+markers',
+                            name=f'Fréquence : {frequency} mois')
+
+        fig.add_scatter(x=dates['Date'], y=investissements_initiaux_recurrents_cumulatifs, mode='lines+markers',
+                        name='Total des versements')
+        fig.add_scatter(x=dates['Date'], y=lumpSum['valeur_finale_investissement'], mode='lines+markers',
+                        name='Lump Sum', line=dict(color='orange'))
+
+        # Mise en forme du titre et des axes
+        fig.update_layout(title='Évolution des investissements',
+                          xaxis_title='Date',
+                          yaxis_title='Montant (en euros)')
+
+        # Affichage du graphique avec Streamlit
+        st.plotly_chart(fig)
         
 if __name__ == "__main__":
     main()
