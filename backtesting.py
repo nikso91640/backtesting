@@ -217,7 +217,7 @@ def main():
         st.write(f"CAGR : {((((resultats[0][meilleure_frequence]['montant_final'] / resultats[0][meilleure_frequence]['total_investissement'])) ** (1 / years_difference)) - 1) *100:.2f} %")
 
         # Mise en forme du titre et des axes
-        fig.update_layout(title='Évolution des investissements',
+        fig.update_layout(title=f'Évolution de l'investissement -{yf.Ticker(ticker).info['shortName']}',
                           xaxis_title='Date',
                           yaxis_title='Montant (en euros)')
 
