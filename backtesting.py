@@ -2,7 +2,7 @@ import yfinance as yf
 import pandas as pd
 from dateutil import relativedelta
 from datetime import datetime
-import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
 yf.pdr_override()
@@ -13,7 +13,7 @@ freqs = [1, 3, 6, 12]
 frequency_colors = {1: 'red', 3: 'green', 6: 'blue', 12: 'purple'}  # Ajoutez d'autres fréquences et couleurs si nécessaire
 
 # Création du graphique avec Plotly
-fig = px.line()
+fig = go.Figure()
 
 @st.cache
 def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, recurring_amount):
