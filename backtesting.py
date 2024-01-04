@@ -181,14 +181,13 @@ def main():
 
     # Création des widgets d'entrée dans Streamlit
     ticker = st.text_input("Entrez le ticker Yahoo Finance (par exemple 'CW8.PA') : ")
+    date_debut = st.number_input("Entrez l'année de début : ", min_value=1900, max_value=datetime.now().year)
+    date_fin = st.number_input("Entrez l'année de fin : ", min_value=date_debut, max_value=datetime.now().year)
+    montant_initial = st.number_input("Entrez le montant initial en euros : ", min_value=1)
+    montant_recurrent = st.number_input("Entrez le montant récurrent : ", min_value=1)
 
     if st.button("Analyser"):
         if ticker:
-            date_debut = st.number_input("Entrez l'année de début : ", min_value=1900, max_value=datetime.now().year)
-            date_fin = st.number_input("Entrez l'année de fin : ", min_value=date_debut, max_value=datetime.now().year)
-            montant_initial = st.number_input("Entrez le montant initial en euros : ", min_value=0.01)
-            montant_recurrent = st.number_input("Entrez le montant récurrent : ", min_value=0.01)
-
             # Calcul des rendements cumulatifs
             resultats = calculate_cumulative_returns(ticker, date_debut, date_fin, montant_initial, montant_recurrent)
 
