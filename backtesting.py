@@ -12,6 +12,9 @@ freqs = [1, 3, 6, 12]
 # Création d'un dictionnaire associant les fréquences à des couleurs spécifiques
 frequency_colors = {1: 'red', 3: 'green', 6: 'blue', 12: 'purple'}  # Ajoutez d'autres fréquences et couleurs si nécessaire
 
+# Création du graphique avec Plotly
+fig = px.line()
+
 @st.cache
 def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, recurring_amount):
     total_recurring_investments = 0
@@ -143,9 +146,10 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
         # On réinitialise le montant récurrent en fonction de la freq
         recurring_amount = recurring_amount // frequency
 
-        plt.plot(merged_data['Date'], valeurs_investissements_cumulatives, label=f'Fréquence :  {frequency} mois',
-                 color=color, marker='o', markersize=4)
-
+        fig.add_scatter(x=merged_data['Date'], y=valeurs_investissements_cumulatives,
+                mode='markers+lines', name=f'Fréquence : {frequency} mois',
+                marker=dict(color=color, symbol='circle', size=4))
+        
         # Stocker les résultats dans le dictionnaire avec la clé de la fréquence correspondante
         resultats[f'{frequency}mo'] = {
             'montant_final': montant_final,
@@ -167,11 +171,13 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
         'valeur_finale_investissement': valeur_investissement_lumpsum + liquidites_lumpsum
     }
 
-    plt.plot(dates['Date'], investissements_initiaux_recurrents_cumulatifs, label=f'Total des versements',
-             color='black', marker='o', markersize=4)
-    plt.plot(dates['Date'], lumpSum['valeur_finale_investissement'], label=f'Lump Sum', color='orange', marker='o',
-             markersize=4)
-
+    fig.add_scatter(x=dates['Date'], y=investissements_initiaux_recurrents_cumulatifs,
+                mode='markers+lines', name='Total des versements',
+                marker=dict(color='black', symbol='circle', size=4))
+    fig.add_scatter(x=dates['Date'], y=lumpSum['valeur_finale_investissement'],
+                mode='markers+lines', name='Lump Sum',
+                marker=dict(color='orange', symbol='circle', size=4))
+    
     return resultats, meilleure_frequence, meilleur_resultat, years_difference, montant_final_max
 
 
@@ -220,9 +226,6 @@ def main():
         st.write(f"Montant final : {montant_final_max:.2f} €")
         st.write(f"Intérêts composés : {interets:.2f} €")
         st.write(f"Pourcentage d'évolution : {meilleur_resultat['pourcentage_evolution']:.2f} %")
-
-        # Création du graphique avec Plotly
-        fig = px.line()
 
         for frequency, resultat in resultats[0].items():
             fig.add_scatter(x=resultat['date_first_invest'], y=resultat['montant_final'], mode='lines+markers',
