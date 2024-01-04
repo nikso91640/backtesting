@@ -177,7 +177,7 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
 
 # Fonction principale pour exécuter le code Streamlit
 def main():
-    st.title("Analyse d'investissement")
+    st.title(f"Analyse investissement - {yf.Ticker(ticker).info['shortName']}")
 
     # Création des widgets d'entrée dans Streamlit
     ticker = st.text_input("Entrez le ticker Yahoo Finance (par exemple 'CW8.PA') : ")
