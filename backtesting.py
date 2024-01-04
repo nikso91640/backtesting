@@ -201,7 +201,6 @@ def main():
         years_difference = resultats[3]
         montant_final_max = resultats[4]
         interets = montant_final_max - resultats[0][meilleure_frequence]['total_investissement']
-        lumpSum = lumpSum['investissement']
 
         # Affichage des informations récapitulatives
         st.write(f"ETF : {ticker}")
