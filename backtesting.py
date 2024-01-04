@@ -2,7 +2,7 @@ import yfinance as yf
 import pandas as pd
 from dateutil import relativedelta
 from datetime import datetime
-import matplotlib.pyplot as plt
+import plotly.express as px
 import streamlit as st
 
 yf.pdr_override()
