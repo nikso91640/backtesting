@@ -148,7 +148,7 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
 
         fig.add_trace(go.Scatter(x=merged_data['Date'], y=valeurs_investissements_cumulatives,
                 mode='markers+lines', name=f'Fréquence : {frequency} mois',
-                marker=dict(color=color, symbol='circle', size=4))
+                marker=dict(color=color, symbol='circle', size=4)))
         
         # Stocker les résultats dans le dictionnaire avec la clé de la fréquence correspondante
         resultats[f'{frequency}mo'] = {
