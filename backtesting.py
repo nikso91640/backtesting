@@ -170,7 +170,7 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
         'investissement': initial_amount + (months_count * recurring_amount),
         'valeur_finale_investissement': valeur_investissement_lumpsum + liquidites_lumpsum,
         'interets': lumpSum['valeur_finale_investissement'] - lumpSum['investissement'],
-        'evolution': ((lumpSum['valeur_finale_investissement / lumpSum['investissement']) - 1) * 100
+        'evolution': ((lumpSum['valeur_finale_investissement] / lumpSum['investissement']) - 1) * 100
     }
 
     fig.add_trace(go.Scatter(x=dates['Date'], y=investissements_initiaux_recurrents_cumulatifs,
