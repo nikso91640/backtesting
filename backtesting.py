@@ -224,7 +224,7 @@ def main():
         st.write(f"Montant final : {lumpSum['valeur_finale_investissement']} €")
         st.write(f"Intérêts composés : {lumpSum['interets']} €")
         st.write(f"Pourcentage d'évolution : {lumpSum['evolution']} %")
-        st.write(f"CAGR : {((((lumpSum['valeur_finale_investissement'] / lumpSum['investissement'])) ** (1 / years_difference)) - 1) *100:.2f} %")
+        
 
 
         # Mise en forme du titre et des axes
