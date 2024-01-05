@@ -168,7 +168,9 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
 
     lumpSum = {
         'investissement': initial_amount + (months_count * recurring_amount),
-        'valeur_finale_investissement': valeur_investissement_lumpsum + liquidites_lumpsum
+        'valeur_finale_investissement': valeur_investissement_lumpsum + liquidites_lumpsum,
+        'interets': lumpSum['valeur_finale_investissement'] - lumpSum['investissement'],
+        'evolution': ((lumpSum['valeur_finale_investissement / lumpSum['investissement']) - 1) * 100
     }
 
     fig.add_trace(go.Scatter(x=dates['Date'], y=investissements_initiaux_recurrents_cumulatifs,
@@ -178,7 +180,7 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
                 mode='markers+lines', name='Lump Sum',
                 marker=dict(color='orange', symbol='circle', size=4)))
     
-    return resultats, meilleure_frequence, meilleur_resultat, years_difference, montant_final_max
+    return resultats, meilleure_frequence, meilleur_resultat, years_difference, montant_final_max, lumpSum
 
 
 # Fonction principale pour exécuter le code Streamlit
@@ -207,14 +209,23 @@ def main():
         st.write(f"Durée d'investissement : {years_difference} ans")
         st.write(f"Total des investissements (initial + récurrents): {resultats[0][meilleure_frequence]['total_investissement']:.2f} €")
 
-        # Affichage des résultats finaux
-        st.write('\n----------- RESULTAT --------------')
+        # Affichage des résultats finaux DCA
+        st.write('\n----------- DCA --------------')
         st.write(f"Meilleure fréquence : {meilleure_frequence}")
         st.write(f"Montant épargné : {resultats[0][meilleure_frequence]['total_investissement']:.2f} €")
         st.write(f"Montant final : {montant_final_max:.2f} €")
         st.write(f"Intérêts composés : {interets:.2f} €")
         st.write(f"Pourcentage d'évolution : {meilleur_resultat['pourcentage_evolution']:.2f} %")
         st.write(f"CAGR : {((((resultats[0][meilleure_frequence]['montant_final'] / resultats[0][meilleure_frequence]['total_investissement'])) ** (1 / years_difference)) - 1) *100:.2f} %")
+
+        # Affichage des résultats finaux Lump Sum
+        st.write('\n----------- LUMP SUM --------------')
+        st.write(f"Montant unique épargné : {lumpSum['investissement']} €")
+        st.write(f"Montant final : {lumpSum['valeur_finale_investissement']} €")
+        st.write(f"Intérêts composés : {lumpSum} €")
+        st.write(f"Pourcentage d'évolution : {} %")
+        st.write(f"CAGR : {((((lumpSum['valeur_finale_investissement'] / lumpSum['investissement'])) ** (1 / years_difference)) - 1) *100:.2f} %")
+
 
         # Mise en forme du titre et des axes
         fig.update_layout(title=f'Évolution de l'investissement -{yf.Ticker(ticker).info['shortName']}',
