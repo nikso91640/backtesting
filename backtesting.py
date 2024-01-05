@@ -222,8 +222,8 @@ def main():
         st.write('\n----------- LUMP SUM --------------')
         st.write(f"Montant unique épargné : {lumpSum['investissement']} €")
         st.write(f"Montant final : {lumpSum['valeur_finale_investissement']} €")
-        st.write(f"Intérêts composés : {lumpSum} €")
-        st.write(f"Pourcentage d'évolution : {} %")
+        st.write(f"Intérêts composés : {lumpSum['interets']} €")
+        st.write(f"Pourcentage d'évolution : {lumpSum['evolution']} %")
         st.write(f"CAGR : {((((lumpSum['valeur_finale_investissement'] / lumpSum['investissement'])) ** (1 / years_difference)) - 1) *100:.2f} %")
 
 
