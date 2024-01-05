@@ -228,7 +228,7 @@ def main():
 
 
         # Mise en forme du titre et des axes
-        fig.update_layout(title=f'Évolution de l\'investissement - {yf.Ticker(ticker).info['shortName']}',
+        fig.update_layout(title=f"Évolution de l\'investissement - {yf.Ticker(ticker).info['shortName']}",
                   xaxis_title='Date',
                   yaxis_title='Montant (en euros)')
 
