@@ -146,7 +146,7 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
         # On réinitialise le montant récurrent en fonction de la freq
         recurring_amount = recurring_amount // frequency
 
-        fig.add_trace(go.Scatter(x=merged_data['Date'], y=valeurs_investissements_cumulatives,
+        fig.add_trace(go.Scatter(x=merged_data.index, y=valeurs_investissements_cumulatives,
                 mode='markers+lines', name=f'Fréquence : {frequency} mois',
                 marker=dict(color=color, symbol='circle', size=4)))
         
@@ -171,10 +171,10 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
         'valeur_finale_investissement': valeur_investissement_lumpsum + liquidites_lumpsum
     }
 
-    fig.add_trace(go.Scatter(x=dates['Date'], y=investissements_initiaux_recurrents_cumulatifs,
+    fig.add_trace(go.Scatter(x=dates.index, y=investissements_initiaux_recurrents_cumulatifs,
                 mode='markers+lines', name='Total des versements',
                 marker=dict(color='black', symbol='circle', size=4)))
-    fig.add_trace(go.Scatter(x=dates['Date'], y=lumpSum['valeur_finale_investissement'],
+    fig.add_trace(go.Scatter(x=dates.index, y=lumpSum['valeur_finale_investissement'],
                 mode='markers+lines', name='Lump Sum',
                 marker=dict(color='orange', symbol='circle', size=4)))
     
