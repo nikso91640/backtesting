@@ -220,7 +220,7 @@ def main():
         # Affichage des résultats finaux Lump Sum
         st.write('\n----------- LUMP SUM --------------')
         st.write(f"Montant unique épargné : {lumpSum['investissement']} €")
-        st.write(f"Montant final : {lumpSum['valeur_finale_investissement']} €")
+        st.write(f"Montant final : {lumpSum['valeur_finale_investissement'][-1]} €")
         st.write(f"Intérêts composés : {lumpSum['valeur_finale_investissement'] - lumpSum['investissement']} €")
         st.write(f"Pourcentage d'évolution : {((lumpSum['valeur_finale_investissement'] / lumpSum['investissement']) - 1) * 100} %")
         st.write(f"CAGR : {((((lumpSum['valeur_finale_investissement'] / lumpSum['investissement'])) ** (1 / years_difference)) - 1) *100:.2f} %")
