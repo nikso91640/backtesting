@@ -168,9 +168,7 @@ def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, r
 
     lumpSum = {
         'investissement': initial_amount + (months_count * recurring_amount),
-        'valeur_finale_investissement': valeur_investissement_lumpsum + liquidites_lumpsum,
-        'interets': lumpSum['valeur_finale_investissement'] - lumpSum['investissement'],
-        'evolution': ((lumpSum['valeur_finale_investissement'] / lumpSum['investissement']) - 1) * 100
+        'valeur_finale_investissement': valeur_investissement_lumpsum + liquidites_lumpsum
     }
 
     fig.add_trace(go.Scatter(x=dates['Date'], y=investissements_initiaux_recurrents_cumulatifs,
@@ -222,8 +220,8 @@ def main():
         st.write('\n----------- LUMP SUM --------------')
         st.write(f"Montant unique épargné : {lumpSum['investissement']} €")
         st.write(f"Montant final : {lumpSum['valeur_finale_investissement']} €")
-        st.write(f"Intérêts composés : {lumpSum['interets']} €")
-        st.write(f"Pourcentage d'évolution : {lumpSum['evolution']} %")
+        st.write(f"Intérêts composés : {lumpSum['valeur_finale_investissement'] - lumpSum['investissement']} €")
+        st.write(f"Pourcentage d'évolution : {((lumpSum['valeur_finale_investissement'] / lumpSum['investissement']) - 1) * 100} %")
         st.write(f"CAGR : {((((lumpSum['valeur_finale_investissement'] / lumpSum['investissement'])) ** (1 / years_difference)) - 1) *100:.2f} %")
 
 
