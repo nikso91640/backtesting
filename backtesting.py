@@ -210,7 +210,7 @@ def main():
 
         # Affichage des résultats finaux DCA
         st.write('\n----------- DCA --------------')
-        st.write(f"Meilleure fréquence : {meilleure_frequence}")
+        st.write(f"Meilleure fréquence : {meilleure_frequence}is")
         st.write(f"Montant épargné : {resultats[0][meilleure_frequence]['total_investissement']:.2f} €")
         st.write(f"Montant final : {montant_final_max:.2f} €")
         st.write(f"Intérêts composés : {interets:.2f} €")
