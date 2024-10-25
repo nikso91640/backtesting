@@ -5,7 +5,6 @@ from datetime import datetime
 import plotly.graph_objects as go
 import streamlit as st
 
-yf.pdr_override()
 
 # Définition de fréquences
 freqs = [1, 3, 6, 12]
