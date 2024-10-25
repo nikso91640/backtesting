@@ -14,7 +14,7 @@ frequency_colors = {1: 'red', 3: 'green', 6: 'blue', 12: 'purple'}  # Ajoutez d'
 # Création du graphique avec Plotly
 fig = go.Figure()
 
-@st.cache
+@st.cache_data
 def calculate_cumulative_returns(ticker, start_year, end_year, initial_amount, recurring_amount):
     total_recurring_investments = 0
 
